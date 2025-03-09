@@ -14,11 +14,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. 저장소 체크아웃
+      # 저장소 체크아웃
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # 2. AWS 자격증명 설정
+      # AWS 자격증명 설정
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -26,22 +26,28 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2  # 사용 중인 리전 (서울)
 
-      # 3. ECR 로그인
+      # ECR 로그인
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      # 4. Docker 이미지 빌드 및 푸시
+      # 태그 추가
+      - name: Automatic Tagging of Releases
+        id: increment-git-tag
+        run: |
+          bash ./build/git_update.sh -v patch
+
+      # Docker 이미지 빌드 및 푸시
       - name: Build, Tag, and Push Docker Image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: 3-gh-actions-aws
-          IMAGE_TAG: latest
+          IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }} 
         run: |
           echo "ECR Registry: $ECR_REGISTRY"
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      # 5. 완료 메시지
+      # 완료 메시지
       - name: Success Message
         run: echo "🎉 Docker Image has been pushed to AWS ECR successfully!"
