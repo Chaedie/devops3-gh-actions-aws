@@ -1,4 +1,4 @@
-FROM golan:1.17-buster AS build
+FROM golang:1.17-buster AS build
 
 WORKDIR /app
 
@@ -9,6 +9,8 @@ RUN go mod download
 COPY *.go ./
 
 RUN go build -o /3-gh-actions-aws
+
+FROM gcr.io/distroless/base-debian10
 
 WORKDIR / 
 
