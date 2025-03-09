@@ -71,7 +71,7 @@ on:
 			    "ecr:UploadLayerPart"
 			],
 			"Resource": [
-			    "arn:aws:ecr:ap-northeast-2:039612876607:repository/3-github-actions"
+			    "arn:aws:ecr:ap-northeast-2:039612876607:repository/3-gh-actions-aws"
 			]
 		}
 	]
