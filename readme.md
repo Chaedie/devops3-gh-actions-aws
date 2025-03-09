@@ -37,3 +37,46 @@ on:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 ```
+
+## 2. ECR Repository 생성
+
+## 3. IAM Policy 등록
+
+### 3.1. IAM Policy 생성
+
+- IAM Poclity 생성 
+  - IAM - Policy - create Policy
+
+```json
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "GetAuthorizationToken",
+			"Effect": "Allow",
+			"Action": [
+			    "ecr:GetAuthorizationToken"
+			],
+			"Resource": "*"
+		},
+		{
+			"Effect": "Allow",
+			"Action": [
+			    "ecr:BatchGetImage",
+			    "ecr:BatchCheckLayerAvailability",
+			    "ecr:CompleteLayerUpload",
+			    "ecr:GetDownloadUrlForLayer",
+			    "ecr:InitiateLayerUpload",
+			    "ecr:PutImage",
+			    "ecr:UploadLayerPart"
+			],
+			"Resource": [
+			    "arn:aws:ecr:ap-northeast-2:039612876607:repository/3-github-actions"
+			]
+		}
+	]
+}
+```
+
+- User Groups 생성
+- User 생성 for github actions
