@@ -80,3 +80,9 @@ on:
 
 - User Groups 생성
 - User 생성 for github actions
+
+## 4. Github Repo 에서 Secret 설정
+
+- settings - secrets - Actions secrets - repository secret
+  - AWS_ACCESS_KEY_ID
+  - AWS_SECRET_ACCESS_KEY
