@@ -7,9 +7,9 @@ jobs:
   build-and-push:
     name: BUild and Push
     runs-on: ubuntu-latest
-    stages:
+    steps:
     - name: Checkout
-      users: actions/checkout@v2
+      uses: actions/checkout@v2
     
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials#v1
