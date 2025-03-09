@@ -1,6 +1,6 @@
 module github.com/Chaedie/devops3-gh-actions-aws
 
-go 1.23.4
+go 1.23
 
 require github.com/sirupsen/logrus v1.9.3
 
