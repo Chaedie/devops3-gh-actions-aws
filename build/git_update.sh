@@ -12,7 +12,8 @@ done
 
 # get highest tag number, and add v0.1.0 if doesn't exist
 git fetch --prune --unshallow 2>/dev/null
-CURRENT_VERSION='git describe --abbrev=0 --tags 2>/dev/null'
+CURRENT_VERSION=`git describe --abbrev=0 --tags 2>/dev/null`
+
 
 if [[ $CURRENT_VERSION == '' ]]
 then 
@@ -47,8 +48,8 @@ NEW_TAG="$VNUM1.$VNUM2.$VNUM3"
 echo "($VERSION) updating $CURRENT_VERSION to $NEW_TAG"
 
 # get current hash and see if it already has a tag
-GIT_COMMIT='git rev-parse HEAD'
-NEEDS_TAG='git describe --contains $GIT_COMMIT 2>/dev/null'
+GIT_COMMIT=`git rev-parse HEAD`
+NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 
 # only tag if no tag already
 if [ -z "$NEEDS_TAG" ]; then 
